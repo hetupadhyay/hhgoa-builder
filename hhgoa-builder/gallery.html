@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>HH Goa 2026 — Session Radar Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800;900&family=Victor+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Imbue:opsz,wght@10..144,700;10..144,900&family=Bodoni+Moda:ital,wght@0,700..900;1,700..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
+}
+.gallery-card {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-yellow);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+.gallery-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--yellow);
+}
+.gallery-img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--border-yellow);
+  margin-bottom: 12px;
+  background: var(--forest-dark);
+}
+.gallery-name {
+  font-family: 'Imbue', serif;
+  font-size: 32px;
+  color: var(--yellow);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.gallery-role {
+  font-size: 12px;
+  color: var(--pink);
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.gallery-title {
+  font-family: 'Bodoni Moda', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+}
+.empty-gallery {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--panel-bg);
+  border: 1px dashed var(--border-yellow);
+  border-radius: 12px;
+  margin-top: 30px;
+}
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+.empty-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px;
+  color: var(--yellow);
+  margin-bottom: 8px;
+}
+.empty-desc {
+  font-size: 13px;
+  color: rgba(253, 251, 247, 0.7);
+  max-width: 400px;
+  margin: 0 auto 20px auto;
+}
+</style>
+</head>
+<body>
+
+<div class="marquee-container">
+  <div class="marquee-content">
+    BUILDER RADAR GALLERY · HACKER HOUSE GOA 2026 · YOUR SESSION CREATIONS · #FrameInGoa · BUILDER RADAR GALLERY · HACKER HOUSE GOA 2026 · YOUR SESSION CREATIONS · #FrameInGoa ·
+  </div>
+</div>
+
+<nav class="sticky-nav">
+  <div class="section-container nav-wrapper">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-title">2:47PM</span>
+      <span class="brand-sub">STUDIO</span>
+    </a>
+    <div class="nav-actions">
+      <a href="index.html" class="nav-link-ghost">🏠 HOME</a>
+      <a href="gallery.html" class="nav-link-ghost" style="color:var(--yellow);">🔥 CHECK SESSION HYPE</a>
+      <a href="verify.html" class="nav-link-ghost">🔍 VERIFY ID</a>
+      <a href="register.html" class="btn-festival">⚡ GET PASS</a>
+    </div>
+  </div>
+</nav>
+
+<div class="section-container" style="padding-top: 40px; padding-bottom: 60px;">
+  <div style="text-align: center;">
+    <div style="display:inline-block; background:var(--yellow); color:var(--forest-dark); font-size:11px; font-weight:700; padding:4px 12px; border-radius:2px; margin-bottom:12px;">SESSION RADAR</div>
+    <h1 style="font-family:'Outfit', sans-serif; font-size:clamp(2.5rem, 6vw, 4rem); color:var(--yellow); text-transform:uppercase;">YOUR SESSION PASSES</h1>
+    <p style="font-size:13px; color:rgba(253,251,247,0.7); max-width:500px; margin:8px auto 0 auto;">Showing badges generated during your current browser session.</p>
+  </div>
+
+  <div id="galleryGridContainer" class="gallery-grid">
+    <!-- Populated dynamically via JS from sessionStorage -->
+  </div>
+</div>
+
+<footer>
+  <div class="section-container footer-wrapper">
+    <div>
+      <div style="font-family:'Outfit', sans-serif; font-weight:900; color:var(--yellow); font-size:16px;">
+        HACKER <span style="background:var(--pink); color:#fff; padding:0 4px; border-radius:4px;">गोवा</span> HOUSE
+      </div>
+      <div style="font-size:10px; color:rgba(245,197,24,0.4); letter-spacing:0.2em; margin-top:4px;">BUILDER PASS STUDIO / 2026</div>
+    </div>
+    <div style="display:flex; gap:20px; font-size:12px; font-weight:700;">
+      <a href="index.html" style="color:var(--yellow); text-decoration:none;">Home</a>
+      <a href="register.html" style="color:var(--yellow); text-decoration:none;">Register Studio</a>
+      <a href="verify.html" style="color:var(--yellow); text-decoration:none;">Verify Portal</a>
+      <a href="gallery.html" style="color:var(--yellow); text-decoration:none;">Radar Gallery</a>
+      <a href="about.html" style="color:var(--yellow); text-decoration:none;">About Info</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  renderSessionGallery();
+});
+
+function renderSessionGallery() {
+  const container = document.getElementById('galleryGridContainer');
+  const items = JSON.parse(sessionStorage.getItem('hhgoa_session_gallery') || '[]');
+
+  if (!items || items.length === 0) {
+    container.className = '';
+    container.innerHTML = `
+      <div class="empty-gallery">
+        <div class="empty-icon">🎟️</div>
+        <div class="empty-title">NO PASSES CREATED IN THIS SESSION YET</div>
+        <div class="empty-desc">Create your custom Builder Pass in the editor to view it here in your session radar gallery.</div>
+        <a href="register.html" class="btn-festival">⚡ GENERATE YOUR PASS NOW</a>
+      </div>
+    `;
+    return;
+  }
+
+  container.className = 'gallery-grid';
+  container.innerHTML = items.map(item => `
+    <div class="gallery-card">
+      <img src="${item.dataUrl}" class="gallery-img" alt="${item.name}'s Builder Pass">
+      <div class="gallery-name">${item.name.toUpperCase()}</div>
+      <div class="gallery-role">${item.role.toUpperCase()}</div>
+      <div class="gallery-title">"${item.title}"</div>
+    </div>
+  `).join('');
+}
+</script>
+
+</body>
+</html>
