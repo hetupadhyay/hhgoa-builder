@@ -17,7 +17,54 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  /* Remove blue tap flash on mobile */
+  -webkit-tap-highlight-color: transparent;
 }
+
+/* ── GLOBAL INTERACTION FEEL ─────────────────────────── */
+
+/* Kill 300ms tap delay everywhere interactive */
+a, button, input, select, textarea, label, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* Smooth state transitions — only for colour/opacity, no motion */
+button, a, select, input[type="range"] {
+  transition:
+    background-color 0.14s ease,
+    color            0.14s ease,
+    border-color     0.14s ease,
+    opacity          0.14s ease,
+    box-shadow       0.14s ease,
+    filter           0.14s ease;
+}
+
+/* Inputs & selects */
+input, select, textarea {
+  outline: none;
+  transition:
+    border-color  0.14s ease,
+    box-shadow    0.14s ease,
+    background    0.14s ease;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--yellow) !important;
+  box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.18);
+}
+
+/* Links — remove default flash */
+a {
+  -webkit-touch-callout: none;
+}
+
+/* Range sliders feel snappy */
+input[type="range"] {
+  cursor: pointer;
+}
+input[type="range"]:active {
+  opacity: 0.85;
+}
+
 
 body {
   background: radial-gradient(ellipse 90% 55% at 50% -5%, rgba(245, 197, 24, 0.12) 0%, transparent 65%),
@@ -177,14 +224,18 @@ nav.sticky-nav {
   text-decoration: none !important;
   border-radius: 6px;
   border: 1px solid var(--yellow);
-  box-shadow: 0 4px 15px rgba(245, 197, 24, 0.3);
-  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 8px rgba(245, 197, 24, 0.25);
+  transition: background-color 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
   cursor: pointer;
+  user-select: none;
 }
 .btn-hero-primary:hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 197, 24, 0.45);
+  filter: brightness(1.08);
+  box-shadow: 0 4px 16px rgba(245, 197, 24, 0.4);
+}
+.btn-hero-primary:active {
+  filter: brightness(0.92);
+  box-shadow: 0 1px 4px rgba(245, 197, 24, 0.2);
 }
 
 .btn-hero-secondary {
@@ -203,13 +254,17 @@ nav.sticky-nav {
   text-decoration: none !important;
   border-radius: 6px;
   border: 1px solid var(--yellow);
-  transition: all 0.2s ease-in-out;
+  transition: background-color 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
   cursor: pointer;
+  user-select: none;
 }
 .btn-hero-secondary:hover {
-  background: rgba(245, 197, 24, 0.15);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 197, 24, 0.2);
+  background: rgba(245, 197, 24, 0.14);
+  box-shadow: 0 2px 10px rgba(245, 197, 24, 0.15);
+}
+.btn-hero-secondary:active {
+  background: rgba(245, 197, 24, 0.06);
+  box-shadow: none;
 }
 
 /* Festival Button for Nav */
@@ -229,12 +284,11 @@ nav.sticky-nav {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: transform 0.2s, filter 0.2s;
+  user-select: none;
+  transition: filter 0.14s ease, background-color 0.14s ease;
 }
-.btn-festival:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-}
+.btn-festival:hover  { filter: brightness(1.08); }
+.btn-festival:active { filter: brightness(0.9);  }
 
 /* Hero Typography */
 .hero-tag {
@@ -416,11 +470,22 @@ nav.sticky-nav {
   font-weight: 700;
   cursor: pointer;
   border-radius: 6px;
-  transition: all 0.25s;
+  user-select: none;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+.tab:hover:not(.active) {
+  background: rgba(245, 197, 24, 0.1);
+  color: var(--yellow);
+}
+.tab:active:not(.active) {
+  background: rgba(245, 197, 24, 0.06);
 }
 .tab.active {
   background: var(--yellow);
   color: var(--forest-dark);
+}
+.tab.active:active {
+  filter: brightness(0.92);
 }
 
 /* Inputs */
@@ -445,6 +510,11 @@ nav.sticky-nav {
   color: #fff;
   font-family: 'Victor Mono', monospace;
   font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+.input-text:hover {
+  border-color: rgba(245, 197, 24, 0.55);
 }
 
 /* Upload & Crop */
@@ -455,7 +525,11 @@ nav.sticky-nav {
   text-align: center;
   cursor: pointer;
   background: rgba(245, 197, 24, 0.03);
+  transition: border-color 0.14s ease, background-color 0.14s ease;
+  user-select: none;
 }
+.upload-area:hover  { border-color: rgba(245, 197, 24, 0.65); background: rgba(245, 197, 24, 0.06); }
+.upload-area:active { background: rgba(245, 197, 24, 0.1); }
 .crop-container {
   display: none;
   margin-top: 12px;
@@ -511,21 +585,29 @@ nav.sticky-nav {
   justify-content: center;
   gap: 8px;
   white-space: nowrap;
+  user-select: none;
+  transition: filter 0.14s ease, background-color 0.14s ease, box-shadow 0.14s ease;
 }
 .btn-primary {
   background: var(--yellow) !important;
   color: var(--forest-dark) !important;
 }
+.btn-primary:hover  { filter: brightness(1.08); }
+.btn-primary:active { filter: brightness(0.9);  }
 .btn-secondary {
   background: rgba(245, 197, 24, 0.05) !important;
   border: 1px solid var(--border-yellow) !important;
   color: var(--yellow) !important;
 }
+.btn-secondary:hover  { background: rgba(245, 197, 24, 0.12) !important; border-color: rgba(245,197,24,0.6) !important; }
+.btn-secondary:active { background: rgba(245, 197, 24, 0.04) !important; }
 .btn-block:disabled {
   background: rgba(255, 255, 255, 0.05) !important;
-  color: rgba(255, 255, 255, 0.35) !important;
-  border: 1px dashed rgba(255, 255, 255, 0.15) !important;
+  color: rgba(255, 255, 255, 0.28) !important;
+  border: 1px dashed rgba(255, 255, 255, 0.12) !important;
   cursor: not-allowed !important;
+  filter: none !important;
+  pointer-events: none;
 }
 
 /* PREVIEW COLUMN EXACT TOP ALIGNMENT */
