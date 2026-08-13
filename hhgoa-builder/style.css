@@ -583,3 +583,137 @@ footer {
   flex-wrap: wrap;
   gap: 16px;
 }
+
+/* ============================================
+   HAMBURGER / MOBILE NAV
+   ============================================ */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.nav-hamburger:hover { background: rgba(245, 197, 24, 0.12); }
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--yellow);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile slide-down menu — lives inside <nav> so it sticks with it */
+.mobile-nav-menu {
+  display: none;
+  flex-direction: column;
+  background: rgba(5, 45, 22, 0.98);
+  border-top: 1px solid rgba(245, 197, 24, 0.18);
+  overflow: hidden;
+}
+.mobile-nav-menu.open { display: flex; }
+.mobile-nav-menu a {
+  padding: 15px 20px;
+  font-family: 'Victor Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(253, 251, 247, 0.85);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(245, 197, 24, 0.07);
+  transition: background 0.15s, color 0.15s;
+  text-transform: uppercase;
+}
+.mobile-nav-menu a:last-child { border-bottom: none; }
+.mobile-nav-menu a:hover,
+.mobile-nav-menu a:active { background: rgba(245, 197, 24, 0.1); color: var(--yellow); }
+.mobile-nav-menu a.mobile-cta {
+  background: var(--yellow);
+  color: var(--forest-dark);
+  text-align: center;
+  font-weight: 900;
+  margin: 10px 16px 14px;
+  border-radius: 6px;
+  border-bottom: none;
+}
+.mobile-nav-menu a.mobile-cta:hover { filter: brightness(1.08); background: var(--yellow); }
+
+/* ============================================
+   MOBILE MEDIA QUERIES (≤ 640px)
+   ============================================ */
+@media (max-width: 640px) {
+
+  /* NAV */
+  .nav-hamburger { display: flex; }
+  .nav-actions { display: none !important; }
+  .nav-wrapper { height: 56px; }
+
+  /* Palm trees clutter small screens */
+  .palm-tree-left, .palm-tree-right { display: none; }
+
+  /* HERO */
+  .hero-section { padding: 36px 0 52px; }
+  .hero-title-main { font-size: clamp(2.6rem, 14vw, 5rem); gap: 0.05em; margin-bottom: 14px; }
+  .hero-subtitle { font-size: 13px; }
+  .hero-desc { font-size: 12px; letter-spacing: 0.12em; }
+  .hero-btn-row {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .btn-hero-primary,
+  .btn-hero-secondary {
+    width: 100%;
+    justify-content: center;
+    height: 50px;
+    font-size: 13px;
+  }
+
+  /* PROCESS SECTION */
+  .process-section { padding: 36px 0; }
+  .section-header { flex-direction: column; gap: 6px; align-items: flex-start; }
+  .steps-grid { grid-template-columns: 1fr 1fr; }
+  .step-card { padding: 16px; }
+  .step-num { font-size: 28px; }
+
+  /* GENERATOR */
+  .generator-area { padding: 20px 0 48px; }
+  .mode-switch-wrapper { max-width: 100%; margin-bottom: 20px; }
+  .app-grid { gap: 20px; }
+  .panel { padding: 16px; }
+  .tab { font-size: 11px; padding: 9px 6px; }
+  .btn-block { font-size: 12px; padding: 13px 10px; }
+
+  /* SQUAD SETUP */
+  .squad-setup-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+  .full-canvas-wrapper { border-width: 2px; }
+
+  /* CANVAS */
+  .canvas-wrapper { max-width: 100%; }
+
+  /* SECURITY / INFO SECTIONS */
+  .security-section { padding: 36px 0; }
+
+  /* FOOTER */
+  .footer-wrapper { flex-direction: column; text-align: center; gap: 12px; }
+}
+
+/* Tablet range tweaks (641–900px) */
+@media (min-width: 641px) and (max-width: 900px) {
+  .nav-wrapper { height: 60px; }
+  .btn-hero-primary, .btn-hero-secondary { font-size: 13px; height: 48px; padding: 0 22px; }
+  .steps-grid { grid-template-columns: 1fr 1fr; }
+  .hero-title-main { font-size: clamp(3rem, 10vw, 6rem); }
+}

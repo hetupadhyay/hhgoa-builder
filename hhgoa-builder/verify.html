@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<nav class="sticky-nav">
+<nav class="sticky-nav" id="mainNav">
   <div class="section-container nav-wrapper">
     <a href="index.html" class="brand-logo">
       <span class="brand-title">2:47PM</span>
@@ -38,6 +38,15 @@
       <a href="verify.html" class="nav-link-ghost" style="color:var(--yellow);">🔍 VERIFY ID</a>
       <a href="register.html" class="btn-festival">⚡ GET PASS</a>
     </div>
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-nav-menu" id="mobileNavMenu">
+    <a href="index.html">🏠 Home</a>
+    <a href="gallery.html">🔥 Session Hype</a>
+    <a href="verify.html">🔍 Verify ID</a>
+    <a href="register.html" class="mobile-cta">⚡ Get Your Builder Pass</a>
   </div>
 </nav>
 
@@ -168,6 +177,12 @@ function drawVerifyCanvas(cvs, ctx, name, role, title, classVal, idNum) {
   ctx.font = "700 18px 'Victor Mono', monospace";
   ctx.fillText(`AUTHENTICATED BY HACKER HOUSE GOA`, CW / 2, 1030);
   ctx.fillText(`EVENT DATES: 28-31 OCT 2026`, CW / 2, 1060);
+}
+</script>
+<script>
+function toggleMobileNav() {
+  document.getElementById('navHamburger').classList.toggle('open');
+  document.getElementById('mobileNavMenu').classList.toggle('open');
 }
 </script>
 </body>
